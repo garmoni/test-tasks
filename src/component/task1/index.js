@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import data from './data.json';
 import './styles.css';
@@ -7,7 +7,15 @@ export const Task1 = () => {
     const [valueInput, setValueInput] = useState('');
     const [selectOne, setSelectOne] = useState('');
     const [selectSecond, setSelectSecond] = useState('');
-    const [result, setResult] = useState('')
+    const [result, setResult] = useState('');
+    let numOne
+    let numSecond
+
+    useEffect(() =>{
+        if(selectOne && selectSecond && valueInput) {
+            setResult(parseFloat((valueInput * data[numOne].convert_to[numSecond]).toFixed(2)))
+        }
+    }, [valueInput, selectOne, selectSecond, numOne, numSecond] )
 
     const handleSelectChangeOne = (event) =>{
         setSelectOne(event.target.value);
@@ -26,9 +34,7 @@ export const Task1 = () => {
         >
             {value.name}
         </option>
-    )
-    let numOne = 'm'
-    let numSecond = 'm' 
+    ) 
     keyData.forEach(function(item) {
         if(item === selectOne) {
             numOne = item
@@ -42,12 +48,7 @@ export const Task1 = () => {
         return numSecond
         } 
     })
-    console.log(data[numOne].convert_to.numSecond)
-    console.log(numSecond)
-    const chahgeInput = () => {
-        setResult(valueInput * data[numOne].convert_to.numSecond)
-       //console.log(data[numOne].convert_to.numSecond)
-    }
+
     return (
         <div className='container'>
             <h3>Конвертор единиц измерения расстояния</h3>
@@ -62,7 +63,6 @@ export const Task1 = () => {
                         onChange={handleSelectChangeOne}
                         >
                         <option>Выберите значение</option>
-                        {console.log(selectOne)}
                         {listOption}
                     </select>
                 </label>
@@ -76,7 +76,6 @@ export const Task1 = () => {
                         onChange={handleSelectChangeSecond}
                         >
                             <option>Выберите значение</option>
-                            {console.log(selectSecond)}
                         {listOption}
                     </select>
                 </label>
@@ -84,14 +83,13 @@ export const Task1 = () => {
                     Введите значение
                     <input
                     value={valueInput}
-                    onChange={e => setValueInput(e.target.value.replace(/\D/, ''))}
+                    onChange={e => setValueInput(e.target.value.replace(',', '.').replace(/[^\d.]/g, "").replace(/\./, "x").replace(/\./g, "").replace(/x/, "."))}
                     />
                 </label>
                 <label>
                     Получаем
                     <input
-                    value={result}
-                    onChange={chahgeInput}
+                    defaultValue={result}
                     />
                 </label>
             </div>
