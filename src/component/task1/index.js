@@ -1,18 +1,22 @@
 import React, { useState, useEffect } from 'react';
 
 import data from './data.json';
+import { listOption } from './list'
+import  { AddUnit } from './add';
 import './styles.css';
 
 export const Task1 = () => {
+    const nameLable = 'Выберите значение';
     const [valueInput, setValueInput] = useState('');
-    const [selectOne, setSelectOne] = useState('');
-    const [selectSecond, setSelectSecond] = useState('');
+    const [selectOne, setSelectOne] = useState(nameLable);
+    const [selectSecond, setSelectSecond] = useState(nameLable);
     const [result, setResult] = useState('');
     let numOne
     let numSecond
 
     useEffect(() =>{
-        if(selectOne && selectSecond && valueInput) {
+        if (selectOne === 'Выберите значение' || selectSecond === 'Выберите значение') return
+        else if(selectOne && selectSecond && valueInput ) {
             setResult(parseFloat((valueInput * data[numOne].convert_to[numSecond]).toFixed(2)))
         }
     }, [valueInput, selectOne, selectSecond, numOne, numSecond] )
@@ -25,16 +29,7 @@ export const Task1 = () => {
         setSelectSecond(event.target.value);
     }
     const keyData = Object.keys(data)
-    const newData = Object.entries(data)
-
-    const listOption = newData.map(([key,value]) => 
-        <option
-            key={key}
-            value={value.unit}
-        >
-            {value.name}
-        </option>
-    ) 
+   
     keyData.forEach(function(item) {
         if(item === selectOne) {
             numOne = item
@@ -62,7 +57,7 @@ export const Task1 = () => {
                         defaultValue="selectOne"
                         onChange={handleSelectChangeOne}
                         >
-                        <option>Выберите значение</option>
+                        <option>{nameLable}</option>
                         {listOption}
                     </select>
                 </label>
@@ -75,7 +70,7 @@ export const Task1 = () => {
                         defaultValue="selectSecond"
                         onChange={handleSelectChangeSecond}
                         >
-                            <option>Выберите значение</option>
+                            <option>{nameLable}</option>
                         {listOption}
                     </select>
                 </label>
@@ -87,12 +82,13 @@ export const Task1 = () => {
                     />
                 </label>
                 <label>
-                    Получаем
+                    Расчет
                     <input
                     defaultValue={result}
                     />
                 </label>
             </div>
+            <AddUnit />
         </div>
     )
 }

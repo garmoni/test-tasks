@@ -1,7 +1,7 @@
     {
         "m": {
             "unit": "m",
-            "name": "meters",
+            "name": "Метр",
             "convert_to": {
                 "m": 1.0,
                 "cm": 100,
@@ -11,7 +11,7 @@
         },
         "cm": {
             "unit": "cm",
-            "name": "centimeter",
+            "name": "Сантиметр",
             "convert_to": {
                 "m": 0.01,
                 "cm": 1,
@@ -21,7 +21,7 @@
         },
         "in": {
             "unit": "in",
-            "name": "inch",
+            "name": "Дюйм",
             "convert_to": {
                 "m": 0.0254,
                 "cm": 2.54,
@@ -31,7 +31,7 @@
         },
         "ft": {
             "unit": "ft",
-            "name": "foot",
+            "name": "Фут",
             "convert_to": {
                 "m": 0.3048,
                 "cm": 30.48,

@@ -1,7 +1,19 @@
 .formWrap {
     display: flex;
+    align-items: flex-end;
+    margin-bottom: 100px;
 }
 input, select {
     padding: 5px 10px;
-    margin: 0 5px;
+    margin: 2px 0;
+}
+label {
+    margin: 5px;
+}
+.textAdd {
+    margin: 5px 0 10px;
+}
+input[type=submit] {
+    height: 30px;
+    margin-bottom: 7px;
 }
