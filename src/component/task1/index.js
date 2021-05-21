@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import data from './data.json';
-import { listOption } from './list'
+// import { listOption } from './list'
 import  { AddUnit } from './add';
 import './styles.css';
 
@@ -11,8 +11,13 @@ export const Task1 = () => {
     const [selectOne, setSelectOne] = useState(nameLable);
     const [selectSecond, setSelectSecond] = useState(nameLable);
     const [result, setResult] = useState('');
+    const [valueInputOne, setValueInputOne] = useState('');
+    const [valueInputTwo, setValueInputTwo] = useState('');
+    const [valueInputConvert, setValueInputConvert] = useState('');
+    const [selectOneAdd, setSelectOneAdd] = useState(nameLable);
     let numOne
     let numSecond
+    const newData = Object.entries(data)
 
     useEffect(() =>{
         if (selectOne === 'Выберите значение' || selectSecond === 'Выберите значение') return
@@ -20,6 +25,52 @@ export const Task1 = () => {
             setResult(parseFloat((valueInput * data[numOne].convert_to[numSecond]).toFixed(2)))
         }
     }, [valueInput, selectOne, selectSecond, numOne, numSecond] )
+
+    const listOption = newData.map(([key,value]) =>
+        <option
+            key={key}
+            value={value.unit}
+        >
+            {value.name}
+        </option>
+    )
+
+    
+
+    const regInputLat = (e) =>{
+        setValueInputOne(e.target.value.replace(/[^A-Za-z]/ig, ''))
+    }
+
+    const regInputCirilic = (e) =>{
+        setValueInputTwo(e.target.value.replace(/[^А-яЁё]/g, ''))
+    }
+
+    const regInputNumber = (e) =>{
+        setValueInputConvert(e.target.value.replace(',', '.').replace(/[^\d.]/g, "").replace(/\./, "x").replace(/\./g, "").replace(/x/, "."))
+    }
+
+    const changeSelect = (e) =>{
+        setSelectOneAdd(e.target.value)
+    }
+    
+    const handleClick = (e) => {
+        e.preventDefault();
+        
+          const request = {
+            [valueInputOne]: {
+                unit: valueInputOne,
+                name: valueInputTwo,
+                convert_to: {
+                [selectOneAdd]: valueInputConvert,
+              },
+            },
+        }
+        Object.assign(request, data);
+        console.log(request)
+        setValueInputOne('');
+        setValueInputTwo('');
+        setValueInputConvert('')
+    }
 
     const handleSelectChangeOne = (event) =>{
         setSelectOne(event.target.value);
@@ -88,7 +139,16 @@ export const Task1 = () => {
                     />
                 </label>
             </div>
-            <AddUnit />
+            <AddUnit 
+                handleClick={handleClick} 
+                valueInputOne={valueInputOne} 
+                valueInputTwo={valueInputTwo} 
+                valueInputConvert={valueInputConvert}
+                regInputLat={regInputLat}
+                regInputCirilic={regInputCirilic}
+                changeSelect={changeSelect}
+                regInputNumber={regInputNumber}
+                />
         </div>
     )
 }

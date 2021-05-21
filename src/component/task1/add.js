@@ -1,56 +1,58 @@
 import React, { useState, useEffect } from 'react';
 
-//import data from './data.json';
 import { listOption } from './list'
 
-export const AddUnit = () => {
-    const [valueInputOne, setValueInputOne] = useState('');
-    const [valueInputTwo, setValueInputTwo] = useState('');
-    const [valueInputConvert, setValueInputConvert] = useState('');
-    const [isDisabled, setDisabled] = useState(false);
+export const AddUnit = ({handleClick, valueInputOne, valueInputTwo, valueInputConvert, regInputLat, regInputCirilic, changeSelect, regInputNumber}) => {
     const nameLable = 'Выберите значение';
+    const [isDisabled, setDisabled] = useState(true);
 
     //const newData = Object.entries(data)
+    // console.log(data)
 
     useEffect(() =>{
-       if (valueInputOne && valueInputTwo) setDisabled(true)
-    }, [valueInputOne, valueInputTwo] )
+       if (valueInputOne && valueInputTwo && valueInputConvert > 1) setDisabled(false)
+    }, [valueInputOne, valueInputTwo, valueInputConvert] )
 
-    const handleClick = () => {
+    // const handleClick = (e) => {
+    //     e.preventDefault();
         
-    }
+    //     //var data = require('./data.json');
+    //       const request = {
+    //         [valueInputOne]: {
+    //             unit: valueInputOne,
+    //             name: valueInputTwo,
+    //             convert_to: {
+    //             [selectOne]: valueInputConvert,
+    //           },
+    //         },
+    //     }
+    //     Object.assign(request, data);
+    //     console.log(request)
+    //     //console.log(data)
+    //     setValueInputOne('');
+    //     setValueInputTwo('');
+    //     setValueInputConvert('')
+    // }
 
 
     return (
         <div>
             <h3>Добавить единицу растояния</h3>
             <div className="textAdd">Добавьте название (mm, yd, km) и имя единицы (Миллиметр, Ярд, Киллометр) или выберите добавленное значение</div>
-            <form className='formWrap'>
+            <form className='formWrap' onSubmit={handleClick}>
             <label>
                 Название
                 <input
                 value={valueInputOne}
-                onChange={e => setValueInputOne(e.target.value.replace(/[^A-Za-z]/ig, ''))}
+                onChange={regInputLat}
                 />
             </label>
             <label>
                 Имя
                 <input
                 value={valueInputTwo}
-                onChange={e => setValueInputTwo(e.target.value.replace(/[^А-яЁё]/g, ''))}
+                onChange={regInputCirilic}
                 />
-            </label>
-            <label>
-                Выберите
-                <select
-                    id="listOptionSelect"
-                    className="form-convector"
-                    defaultValue="selectOne"
-                    disabled={isDisabled}
-                    >
-                    <option>{nameLable}</option>
-                    {listOption}
-                </select>
             </label>
             <label>
                 C единицей
@@ -58,6 +60,7 @@ export const AddUnit = () => {
                     id="listAddSelect"
                     className="form-convector"
                     defaultValue="selectOne"
+                    onChange={changeSelect}
                     >
                     <option>{nameLable}</option>
                     {listOption}
@@ -67,14 +70,14 @@ export const AddUnit = () => {
                 Значение
                 <input
                 value={valueInputConvert}
-                onChange={e => setValueInputConvert(e.target.value.replace(',', '.').replace(/[^\d.]/g, "").replace(/\./, "x").replace(/\./g, "").replace(/x/, "."))}
+                onChange={regInputNumber}
                 />
             </label>
-            <input 
+            <button 
+                disabled={isDisabled}
                 type="submit" 
                 value="Добавить" 
-                onClick={(e) => handleClick(e)}
-            />
+            >Добавить</button>
             </form>
         </div>
     )
