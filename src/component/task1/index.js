@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 
-import data from './data.json';
-// import { listOption } from './list'
+import jsonData from './data.json';
 import  { AddUnit } from './add';
 import './styles.css';
 
 export const Task1 = () => {
+    
     const nameLable = 'Выберите значение';
+    const [data,setData] = useState(jsonData)
     const [valueInput, setValueInput] = useState('');
     const [selectOne, setSelectOne] = useState(nameLable);
     const [selectSecond, setSelectSecond] = useState(nameLable);
@@ -15,26 +16,31 @@ export const Task1 = () => {
     const [valueInputTwo, setValueInputTwo] = useState('');
     const [valueInputConvert, setValueInputConvert] = useState('');
     const [selectOneAdd, setSelectOneAdd] = useState(nameLable);
+    let [list, setList] = useState('')
     let numOne
-    let numSecond
-    const newData = Object.entries(data)
+    let numSecond  
+    let request  
 
     useEffect(() =>{
         if (selectOne === 'Выберите значение' || selectSecond === 'Выберите значение') return
         else if(selectOne && selectSecond && valueInput ) {
             setResult(parseFloat((valueInput * data[numOne].convert_to[numSecond]).toFixed(2)))
         }
-    }, [valueInput, selectOne, selectSecond, numOne, numSecond] )
+    }, [data, valueInput, selectOne, selectSecond, numOne, numSecond] )
 
-    const listOption = newData.map(([key,value]) =>
+
+    useEffect(() =>{
+        const newData = Object.entries(data)
+        setList(newData.map(([key,value]) =>
         <option
             key={key}
             value={value.unit}
         >
             {value.name}
         </option>
-    )
-
+        ))
+        setResult('')
+    }, [data] )
     
 
     const regInputLat = (e) =>{
@@ -56,7 +62,7 @@ export const Task1 = () => {
     const handleClick = (e) => {
         e.preventDefault();
         
-          const request = {
+          request = {
             [valueInputOne]: {
                 unit: valueInputOne,
                 name: valueInputTwo,
@@ -66,7 +72,7 @@ export const Task1 = () => {
             },
         }
         Object.assign(request, data);
-        console.log(request)
+        setData(request)
         setValueInputOne('');
         setValueInputTwo('');
         setValueInputConvert('')
@@ -109,7 +115,7 @@ export const Task1 = () => {
                         onChange={handleSelectChangeOne}
                         >
                         <option>{nameLable}</option>
-                        {listOption}
+                        {list}
                     </select>
                 </label>
                 <label>
@@ -122,7 +128,7 @@ export const Task1 = () => {
                         onChange={handleSelectChangeSecond}
                         >
                             <option>{nameLable}</option>
-                        {listOption}
+                        {list}
                     </select>
                 </label>
                 <label>
@@ -148,6 +154,7 @@ export const Task1 = () => {
                 regInputCirilic={regInputCirilic}
                 changeSelect={changeSelect}
                 regInputNumber={regInputNumber}
+                list={list}
                 />
         </div>
     )

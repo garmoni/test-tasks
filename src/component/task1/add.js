@@ -1,39 +1,12 @@
 import React, { useState, useEffect } from 'react';
 
-import { listOption } from './list'
-
-export const AddUnit = ({handleClick, valueInputOne, valueInputTwo, valueInputConvert, regInputLat, regInputCirilic, changeSelect, regInputNumber}) => {
+export const AddUnit = ({handleClick, valueInputOne, valueInputTwo, valueInputConvert, regInputLat, regInputCirilic, changeSelect, regInputNumber, list}) => {
     const nameLable = 'Выберите значение';
     const [isDisabled, setDisabled] = useState(true);
-
-    //const newData = Object.entries(data)
-    // console.log(data)
 
     useEffect(() =>{
        if (valueInputOne && valueInputTwo && valueInputConvert > 1) setDisabled(false)
     }, [valueInputOne, valueInputTwo, valueInputConvert] )
-
-    // const handleClick = (e) => {
-    //     e.preventDefault();
-        
-    //     //var data = require('./data.json');
-    //       const request = {
-    //         [valueInputOne]: {
-    //             unit: valueInputOne,
-    //             name: valueInputTwo,
-    //             convert_to: {
-    //             [selectOne]: valueInputConvert,
-    //           },
-    //         },
-    //     }
-    //     Object.assign(request, data);
-    //     console.log(request)
-    //     //console.log(data)
-    //     setValueInputOne('');
-    //     setValueInputTwo('');
-    //     setValueInputConvert('')
-    // }
-
 
     return (
         <div>
@@ -63,7 +36,7 @@ export const AddUnit = ({handleClick, valueInputOne, valueInputTwo, valueInputCo
                     onChange={changeSelect}
                     >
                     <option>{nameLable}</option>
-                    {listOption}
+                    {list}
                 </select>
             </label>
             <label>
