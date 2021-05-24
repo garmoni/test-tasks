@@ -1,5 +1,12 @@
- [
-    {"name": "John", "email": "john2@mail.com"},
-    {"name": "John", "email": "john1@mail.com"},
-    {"name": "Jane", "email": "jane@mail.com"}
-]
+ {
+     "data":
+     [
+        {"name": "John", "email": "john2@mail.com"},
+        {"name": "John", "email": "john1@mail.com"},
+        {"name": "Jane", "email": "jane@mail.com"},
+        {"name": "Anna", "email": "anna@mail.com"},
+        {"name": "Bob", "email": "25bob@mail.com"},
+        {"name": "Anna", "email": "anuta@mail.com"}
+    ]
+}
+ 
