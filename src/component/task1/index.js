@@ -68,6 +68,7 @@ export const Task1 = () => {
                 name: valueInputTwo,
                 convert_to: {
                 [selectOneAdd]: valueInputConvert,
+                [valueInputOne]: 1.0,
               },
             },
         }

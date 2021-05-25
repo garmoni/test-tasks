@@ -1,9 +1,11 @@
 [
-    {"name": "John", "email": "john2@mail.com"},
-    {"name": "John", "email": "john1@mail.com"},
-    {"name": "Jane", "email": "jane@mail.com"},
-    {"name": "Anna", "email": "anna@mail.com"},
-    {"name": "Bob", "email": "25bob@mail.com"},
-    {"name": "Anna", "email": "anuta@mail.com"}
+    {"name": "John", "email": "john2@mail.com", "rating": 21},
+    {"name": "John", "email": "john1@mail.com", "rating": 15},
+    {"name": "Jane", "email": "jane@mail.com", "rating": 12},
+    {"name": "Anna", "email": "anna@mail.com", "rating": 11},
+    {"name": "Bob", "email": "25bob@mail.com", "rating": 20},
+    {"name": "Anna", "email": "anuta@mail.com", "rating": 10},
+    {"name": "Bobbi", "email": "mymail@mail.com", "rating": 5},
+    {"name": "Bob", "email": "juniorBob@mail.com", "rating": 13}
 ]
  

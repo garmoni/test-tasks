@@ -5,7 +5,7 @@ export const AddUnit = ({handleClick, valueInputOne, valueInputTwo, valueInputCo
     const [isDisabled, setDisabled] = useState(true);
 
     useEffect(() =>{
-       if (valueInputOne && valueInputTwo && valueInputConvert > 1) setDisabled(false)
+       if (valueInputOne && valueInputTwo && valueInputConvert > 0) setDisabled(false)
     }, [valueInputOne, valueInputTwo, valueInputConvert] )
 
     return (
