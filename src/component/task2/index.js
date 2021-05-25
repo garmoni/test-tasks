@@ -6,10 +6,13 @@ import './styles.css';
 export const Task2 = () => {
     const [user, setUser] = useState(jsonData)
     const [sortedField, setSortedField] = useState('');
+    const [selectName, setSelectName] = useState('');
+    const [selectEmail, setSelectEmail] = useState('');
+
+    const objectOption = require('./data.json')
 
     useEffect(() =>{
-        console.log(user)
-        setSortedField(user.data.map((value, key)=>(
+        setSortedField(user.map((value, key)=>(
             <tr key={key}>
                 <td>{value.name}</td>
                 <td>{value.email}</td>
@@ -17,31 +20,57 @@ export const Task2 = () => {
         ))) 
     }, [user] )
   
-    const letSortName = ()=> {
-        user.data.sort(function(a, b){
-        let nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
-        if (nameA < nameB)
-            return -1
-        if (nameA > nameB)
-            return 1
-        return 0 
-        })
-        setUser(user)
-        console.log(user)
-    }
-    const letSortEmail = ()=> {
-        user.data.sort(function(a, b){
+
+    const optionName = objectOption.map((value, key)=>(
+        <option
+            key={key}
+            value={value.name}
+        >
+        {value.name}
+        </option>
+        )
+    )    
+
+    const optionEmail = objectOption.map((value, key)=>(
+        <option
+            key={key}
+            value={value.email}
+        >
+        {value.email}
+        </option>
+        )
+    )
+
+    if(selectName !== ''){
+        const filter = user.filter(user => user.name === selectName)
+        filter.sort(function(a, b){
             let emailA=a.email.toLowerCase(), emailB=b.email.toLowerCase()
             if (emailA < emailB) 
                 return -1
             if (emailA > emailB)
                 return 1
             return 0 
-            })
-        setUser(user)
-        console.log(user)
+        })
+        setUser(filter)
+        setSelectName('')
+    }
+    if(selectEmail !== ''){
+        const filter = user.filter(user => user.email === selectEmail)
+        filter.sort(function(a, b){
+            let nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
+            if (nameA < nameB)
+                return -1
+            if (nameA > nameB)
+                return 1
+            return 0 
+        })
+        setUser(filter)
+        setSelectEmail('')
     }
 
+    const dumpFilter = () =>{
+        setUser(jsonData)
+    }
 
     return(
         <div className='container'>
@@ -49,14 +78,31 @@ export const Task2 = () => {
             <table>
             <thead>
                 <tr>
-                    <th onClick={letSortName}>Имя</th>
-                    <th onClick={letSortEmail}>Email</th>
+                    <th>
+                        <select
+                        name="listName"
+                        defaultValue="selectName"
+                        onChange={e => setSelectName(e.target.value)}
+                        >
+                            {optionName}
+                        </select>
+                    </th>
+                    <th>
+                        <select
+                        name="listEmail"
+                        defaultValue="selectEmail"
+                        onChange={e => setSelectEmail(e.target.value)}
+                        >
+                            {optionEmail}
+                        </select>
+                    </th>
                 </tr>
-            </thead>
+                </thead>
             <tbody>
                 {sortedField}
             </tbody>
             </table>
+            <button onClick = {dumpFilter}>Сбросить фильтр</button>
         </div> 
     )
 }
