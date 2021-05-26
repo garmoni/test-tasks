@@ -1,9 +1,58 @@
-{
-    "list1": 
-    [
-        {"What is your marital status?": ["Single", "Married"]},
-        {"Are you planning on getting married next year?": ["Yes", "No"]},
-        {"How long have you been married?": ["Less than a year", "More than a year"]},
-        {"Have you celebrated your one year anniversary?": "Yes/No"}
-    ]
+{ 
+    "1": {
+        "id": 1, 
+        "name": "Каково ваше семейное положение?", 
+        "answers": [
+            {
+                "idNext": "2",
+                "name": "Одинок"
+            }, 
+            {
+                "idNext": "3",
+                "name": "В браке"
+                }
+            ]
+        },
+    "2": {
+        "id": 2, 
+        "name": "Собираешься пожениться в следующем году?", 
+        "answers": [
+            {
+                "idNext": "",
+                "name": "Да"
+            }, 
+            {
+                "idNext": "",
+                "name": "Нет"
+            }
+            ]
+        },
+    "3": {
+        "id": 3, 
+        "name": "Как долго вы в браке?", 
+        "answers": [
+            {
+                "idNext": "",
+                "name": "Меньше года"
+            },
+            {
+                "idNext": "4",
+                "name": "Дольше года"
+                }
+            ]
+        },  
+    "4": {
+        "id": 4, 
+        "name": "Планируете отмечать годовщину?", 
+        "answers": [
+            {
+            "idNext": "",
+            "name": "Да"
+            }, 
+            {
+                "idNext": "",
+                "name": "Нет"
+            }
+        ]
+    }
 }
