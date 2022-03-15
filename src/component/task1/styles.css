@@ -3,7 +3,7 @@
     align-items: flex-end;
     margin-bottom: 100px;
 }
-input, select {
+.units-input, select {
     padding: 5px 10px;
     margin: 2px 0;
 }
