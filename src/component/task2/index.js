@@ -1,111 +1,64 @@
 import React, { useState, useEffect } from 'react';
-
+import { TableHead } from './component/tableHead';
+import { SortingOrder } from './sorting/sortingOrder';
 import jsonData from './data.json';
 import './styles.css';
+import { UseFilter } from './sorting/useFilter';
+import { TableRow } from './component/tableRow';
 
 export const Task2 = () => {
     const [user, setUser] = useState(jsonData)
-    const [sortedField, setSortedField] = useState('');
     const [selectName, setSelectName] = useState('');
+    const [revert, setRevert] = useState(false)
+    const [revertEmail, setRevertEmail] = useState(false)
 
-    const objectOption = jsonData.filter((v,i,a)=>a.findIndex(t=>(t.name === v.name))===i)
+    const objectOption = jsonData.filter((v, i, a) => a.findIndex(t => (t.name === v.name)) === i)
 
-    useEffect(() =>{
-        setSortedField(user.map((value, key)=>(
-            <tr key={key}>
-                <td>{value.name}</td>
-                <td>{value.email}</td>
-                <td>{value.rating}</td>
-            </tr>
-        ))) 
-    }, [user] )
-  
-    const dumpFilter = () =>{
+    const dumpFilter = () => {
         setUser(jsonData)
     }
-   
-    const optionName = objectOption.map((value, key)=>(
-        <option
-            key={key}
-            value={value.name}
-        >
-        {value.name}
-        </option>
-        )
-    )    
 
     const useFilter = () => {
-    if(selectName !== ''){
-        const filter = jsonData.filter(user => user.name === selectName)
-        filter.sort(function(a, b){
-            let emailA=a.email.toLowerCase(), emailB=b.email.toLowerCase()
-            if (emailA < emailB) 
-                return -1
-            if (emailA > emailB)
-                return 1
-            return 0 
-        })
-        setUser(filter)
-        setSelectName('')
+        if (selectName !== '') {
+            const filter = UseFilter(jsonData, selectName)
+            setUser(filter)
+            setSelectName('')
+        }
     }
-}
 
-const sortRating = () => {
-    const newUser = [...user]
-    newUser.sort(function(a, b){
-        let ratingA=a.rating, ratingB=b.rating
-        if (ratingA < ratingB) 
-            return -1
-        if (ratingA > ratingB)
-            return 1
-        return 0 
-    })   
-    setUser(newUser)
-}
+    const sortRating = () => {
+        let sort = SortingOrder(user, 'rating', revert);
+        setUser(sort)
+        setRevert(!revert)
+    }
+    const sortEmail = () => {
+        let sort = SortingOrder(user, 'email', revertEmail)
+        setUser(sort)
+        setRevertEmail(!revertEmail)
+    }
 
-const sortEmail = () => {
-    const newUser = [...user]
-    newUser.sort(function(a, b){
-        let emailA=a.email.toLowerCase(), emailB=b.email.toLowerCase()
-        if (emailA < emailB) 
-            return -1
-        if (emailA > emailB)
-            return 1
-        return 0 
-    })
-    setUser(newUser)
-}
+    const handleSelectName = (e) => {
+        setSelectName(e.target.value)
+    }
 
-    return(
+    return (
         <div className='container'>
             <h1>Сортировка данных</h1>
             <table>
-            <thead>
-                <tr>
-                    <th>
-                        <p>Имя</p>
-                        <select
-                        name="listName"
-                        defaultValue="selectName"
-                        onChange={e => setSelectName(e.target.value)}
-                        onClick={useFilter}
-                        >
-                            {optionName}
-                        </select>
-                    </th>
-                    <th onClick={sortEmail}>
-                    <p>Email</p>
-                    </th>
-                    <th onClick={sortRating}>
-                    <p>Рейтинг</p>
-                    </th>
-                </tr>
+                <thead>
+                    <TableHead
+                        sortEmail={sortEmail}
+                        sortRating={sortRating}
+                        useFilter={useFilter}
+                        objectOption={objectOption}
+                        handleSelectName={handleSelectName}
+                    />
                 </thead>
-            <tbody>
-                {sortedField}
-            </tbody>
+                <tbody>
+                    <TableRow user={user}/>
+                </tbody>
             </table>
-            <button onClick = {dumpFilter}>Сбросить фильтр</button>
-        </div> 
+            <button onClick={dumpFilter}>Сбросить фильтр</button>
+        </div>
     )
 }
