@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 
 export const AddUnit = ({ handleClick, valueInputOne, valueInputTwo, valueInputConvert, regInputLat, regInputCirilic, changeSelect, regInputNumber, list }) => {
-    const nameLable = 'Выберите значение';
     const [isDisabled, setDisabled] = useState(true);
 
     useEffect(() => {
         if (valueInputOne && valueInputTwo && valueInputConvert > 0) setDisabled(false)
+        else setDisabled(true)
     }, [valueInputOne, valueInputTwo, valueInputConvert])
 
     return (
@@ -37,7 +37,6 @@ export const AddUnit = ({ handleClick, valueInputOne, valueInputTwo, valueInputC
                         defaultValue="selectOne"
                         onChange={changeSelect}
                     >
-                        <option>{nameLable}</option>
                         {list}
                     </select>
                 </label>

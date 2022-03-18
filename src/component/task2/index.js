@@ -7,12 +7,17 @@ import { UseFilter } from './sorting/useFilter';
 import { TableRow } from './component/tableRow';
 
 export const Task2 = () => {
-    const [user, setUser] = useState(jsonData)
+    const LocalData = !JSON.parse(localStorage.getItem('user')) ? jsonData : JSON.parse(localStorage.getItem('user'));
+    const [user, setUser] = useState(LocalData)
     const [selectName, setSelectName] = useState('');
     const [revert, setRevert] = useState(false)
     const [revertEmail, setRevertEmail] = useState(false)
 
     const objectOption = jsonData.filter((v, i, a) => a.findIndex(t => (t.name === v.name)) === i)
+
+    useEffect(() => {
+        localStorage.setItem('user', JSON.stringify(user))
+    }, [user])
 
     const dumpFilter = () => {
         setUser(jsonData)

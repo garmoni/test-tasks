@@ -5,8 +5,8 @@ import './styles.css';
 
 export const Task3 = () => {
     const [input, setInput] = useState('')
-    const [nextStep, setNextStep] = useState('1')
-    const [result, setResult] = useState(false)
+    const [nextStep, setNextStep] = useState('1');
+    const [result, setResult] = useState(false);
     const [isDisabled, setDisabled] = useState(true);
 
     const onInputChanged = (e) => {
@@ -16,7 +16,7 @@ export const Task3 = () => {
 
     const handleClick = (e) => {
         e.preventDefault();
-        if (input === "") {
+        if (input === "100" || input === "101") {
             setResult(true)
         }
         setNextStep(input)
@@ -36,12 +36,12 @@ export const Task3 = () => {
                                         <div className="radio" key={key}>
                                             <input
                                                 type="radio"
-                                                name="value"
+                                                name={`value-${Quiz[nextStep].id}`}
                                                 value={index.idNext}
+                                                checked={input === index.idNext}
                                                 onChange={onInputChanged}
                                             />
                                             {index.name}
-
                                         </div>
                                     ))}
                                 </div>
@@ -53,7 +53,8 @@ export const Task3 = () => {
                         >
                             Ответить
                         </button>
-                    </form>)}
+                    </form>)
+                }
         </div>
     )
 }
